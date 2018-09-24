@@ -1,5 +1,8 @@
 package simple_GUI_app;
 
+import com.sun.deploy.net.HttpRequest;
+import com.sun.deploy.net.HttpResponse;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +14,10 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLDecoder;
+
 
 public class GUI_app {
     private JPanel panel_main;
@@ -22,7 +29,11 @@ public class GUI_app {
     private JTextArea output_text;
     private JTextField loop_text;
     private JLabel output_field;
+    private JTextField uri_field;
+    private JButton uri_button;
+    private JLabel uri_label;
     private int count=0;
+    public String type;
 
 
     public GUI_app() {
@@ -30,19 +41,25 @@ public class GUI_app {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-
+                type="command";
                 output_text.setText(input_field.getText());
                 output_text.setEditable(false);
-
                 exec_cmd();
-
             }
         });
         button_loop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                type="loop";
                 loop_text.setEditable(false);
                 exec_loop();
+            }
+        });
+        uri_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                type="uri";
             }
         });
     }
@@ -65,10 +82,12 @@ public class GUI_app {
 
     public void exec_cmd()
     {
-        String user_input=output_text.getText();
-        String[] cmd={"/bin/sh", "-c", user_input};
         try
         {
+            String user_input=output_text.getText();
+            String[] cmd={"/bin/sh", "-c", user_input};
+            String serverAdrs=uri_field.getText();
+
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader input=new BufferedReader(new InputStreamReader(process.getInputStream()));
             String read_input=null;
@@ -79,7 +98,6 @@ public class GUI_app {
             {
                 output_text.append("\n" + read_input);
             }
-
 
             while((error=error_input.readLine())!=null)
             {

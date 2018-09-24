@@ -7,7 +7,8 @@ public class my_thread extends Thread {
     private int count;
     String[] str;
 
-    public my_thread(int var1) {
+    public my_thread(int var1)
+    {
         this.count = var1;
     }
 
@@ -18,6 +19,5 @@ public class my_thread extends Thread {
             this.b = this.sum;
             System.out.println("\n" + this.sum);
         }
-
     }
 }
