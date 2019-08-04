@@ -1,5 +1,5 @@
 # Introduction
-A Java-based network programming course in Lulea University of Technology (September-December'18), Sweden.
+A Java network programming course in Lulea University of Technology (September-December'18), Sweden.
 
 # Description
 This course is focused on cloud computing infrastructure offered by Amazon Web Services (AWS) to create scalable and powerful
